@@ -1,0 +1,377 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 6.3.9600}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 #include<iostream>\par
+//#include<stdlib>\par
+#include "stackG.cpp"\par
+#include "QueueG.cpp"\par
+\par
+using namespace std;\par
+\par
+class Node\par
+\{\par
+        private:\par
+                int data;\par
+                Node *left;\par
+                Node *right;\par
+\par
+        public:\par
+                int i,j;\par
+                Node()\par
+                \{\par
+                        i=j=0;\par
+                \}\par
+                Node(int data)\par
+                \{\par
+                        this->data=data;\par
+                        this->left=NULL;\par
+                        this->right=NULL;\par
+                \}\par
+                void setData(int data)\par
+                \{\par
+                        this->data=data;\par
+                \}\par
+                int getData()\par
+                \{\par
+                        return data;\par
+                \}\par
+                void setLeft(Node *left)\par
+                \{\par
+                        this->left=left;\par
+                \}\par
+                Node *getLeft()\par
+                \{\par
+                        return left;\par
+                \}\par
+                void setRight(Node *right)\par
+                \{\par
+                        this->right=right;\par
+                \}\par
+                Node *getRight()\par
+                \{\par
+                        return right;\par
+                \}\par
+                void print()\par
+                \{\par
+                        cout<<data<<"->";\par
+                \}\par
+\};\par
+\par
+class BST\{\par
+        private:\par
+                Node *root;\par
+        public:\par
+                int i,j;\par
+                int *array1;\par
+                //array1=new int(10);\par
+                int count1,count2;\par
+                int *array2;\par
+                BST()\par
+                \{\par
+                        array1=new int(10);\par
+                        array2=new int(10);\par
+                        root=NULL;\par
+                        i=j=0;\par
+                        count1=0;\par
+                        count2=0;\par
+                \}\par
+                void insert(int data)\par
+                \{\par
+                        Node *newnode=new Node(data);\par
+                        if(root==NULL)\par
+                        \{\par
+                                root=newnode;\par
+                        \}\par
+                        else\par
+                        \{\par
+                                Node *temp=root;\par
+                                Node *prev=NULL;\par
+\par
+                                while(temp!=NULL)\par
+                                \{\par
+                                        prev=temp;\par
+                                        if(data > temp -> getData())\par
+                                        \{\par
+                                                temp=temp->getRight();\par
+                                        \}\par
+                                        else\par
+                                        \{\par
+                                                temp=temp->getLeft();\par
+                                        \}\par
+                                \}\par
+\par
+                                if(data < prev->getData())\par
+                                \{\par
+                                        prev->setLeft(newnode);\par
+                                \}\par
+                                else\par
+                                \{\par
+                                        prev->setRight(newnode);\par
+                                \}\par
+                        \}\par
+\par
+                \}\par
+\par
+\par
+ \par
+                void inorder()\par
+                \{\par
+                        inorder(root);\par
+                \}\par
+                void inorder(Node *root)\par
+                \{\par
+                          //cout<<"Inorder Traversal:\\n";\par
+                        if(root!=NULL)\par
+                        \{\par
+                                inorder(root->getLeft());\par
+                                root->print();\par
+                                array1[i]=root->getData();\par
+                                i++;\par
+                                count1++;\par
+                                inorder(root->getRight());\par
+                        \}\par
+                \}\par
+                void Arrayprint()\par
+                \{\par
+                        for( i=0;i<count2;i++)\par
+                                cout<<array2[i]<<" ";\par
+                \}\par
+\par
+                void preorder()\par
+                \{\par
+                        preorder(root);\par
+                \}\par
+                void preorder(Node *root)\par
+                \{\par
+                          //cout<<"Preorder Traversal:\\n";\par
+                        if(root!=NULL)\par
+                        \{\par
+                                root->print();\par
+                                array2[j]=root->getData();\par
+                                j++;\par
+                                count2++;\par
+                                preorder(root->getLeft());\par
+                                preorder(root->getRight());\par
+                        \}\par
+                \}\par
+\par
+                void postorder()\par
+                \{\par
+                        postorder(root);\par
+                \}\par
+                void postorder(Node *root)\par
+                \{\par
+                          //cout<<"Postorder Traversal:\\n";\par
+                        if(root!=NULL)\par
+                        \{\par
+                                postorder(root->getLeft());\par
+                                postorder(root->getRight());\par
+                                root->print();\par
+                        \}\par
+                \}\par
+                void CompareOrder()\par
+                \{\par
+                        CompareOrder(array1,array2);\par
+                \}\par
+                void CompareOrder(int array1[],int array2[])\par
+                \{\par
+                        for(int i=0;i<count1;i++)\par
+                        \{\par
+                                if(array1[i]==array2[i])\par
+                                        cout<<array1[i]<<"\\t"<<i<<endl;\par
+                        \}\par
+                \}\par
+\par
+                void DFS()\par
+                \{\par
+                        Stack<Node*> store;\par
+                        store.push(root);\par
+                        while(!store.isEmpty())\par
+                        \{\par
+                                Node *temp=store.TopPick();\par
+                                store.pop();\par
+                                temp->print();\par
+                                if(temp->getRight()!=NULL)\par
+                                \{\par
+                                        store.push(temp->getRight());\par
+                                \}\par
+                                if(temp->getLeft()!=NULL)\par
+                                \{\par
+                                        store.push(temp->getLeft());\par
+                                \}\par
+                                //cout<<endl;\par
+                        \}\par
+                \}\par
+                void BFS()\par
+                \{\par
+                        cout<<"inside bfs";\par
+                        Queue<Node*> store(10);\par
+                        store.Enqueue(root);\par
+                        while(!store.isEmpty())\par
+                        \{\par
+                                cout<<"inside loop";\par
+                                Node *temp=store.TopPick();\par
+                                store.Dequeue();\par
+                                temp->print();\par
+                                if(temp->getRight()!=NULL)\par
+                                \{\par
+                                        store.Enqueue(temp->getRight());\par
+                                \}\par
+                                if(temp->getLeft()!=NULL)\par
+                                \{\par
+                                        store.Enqueue(temp->getLeft());\par
+                                \}\par
+                        \}\par
+                \}\par
+\par
+                Node *find(Node *root, int data)\par
+                \{\par
+                        Node *temp=root;\par
+                        while(temp!=NULL && temp->getData()!=data)\par
+                        \{\par
+                                if(data >  temp->getData())\par
+                                        temp=temp->getRight();\par
+                                else\par
+                                        temp=temp->getLeft();\par
+                        \}\par
+                        return temp;\par
+                \}\par
+\par
+                Node *findParent(Node *root,int data)\par
+                \{\par
+                        Node *temp=root;\par
+                        Node *parent=NULL;\par
+                        while(temp!=NULL && temp->getData()!=data)\par
+                        \{\par
+                                parent=temp;\par
+                                if(data > temp->getData())\par
+                                        temp=temp->getRight();\par
+                                else\par
+                                        temp=temp->getLeft();\par
+                        \}\par
+                        return parent;\par
+                \}\par
+\par
+                void deleteZeroChild(Node *node)\par
+                \{\par
+                        if(root==node)\par
+                                 root=NULL;\par
+                        else\par
+                        \{\par
+                                Node *parent=NULL;\par
+                                parent=findParent(root,node->getData());\par
+                                if(node->getData() > parent->getData())\par
+                                \{\par
+                                        parent->setRight(NULL);\par
+                                \}\par
+                                else\par
+                                \{\par
+                                        parent->setLeft(NULL);\par
+                                \}\par
+                        \}\par
+                \}\par
+\par
+                void deleteOneChild(Node *node)\par
+                \{\par
+                        Node *subchild=NULL;\par
+                        if(node->getLeft()!=NULL)\par
+                                subchild=node->getLeft();\par
+                        else\par
+                                subchild=node->getRight();\par
+                        if(root==node)\{\par
+                                root=NULL;\par
+                                root=subchild;\par
+                        \}\par
+                        else\par
+                        \{\par
+                                Node *parent=findParent(root,node->getData());\par
+                                if(node->getData() > parent->getData())\par
+                                \{\par
+                                        parent->setRight(subchild);\par
+                                \}\par
+                                else\par
+                                \{\par
+                                        parent->setLeft(subchild);\par
+                                \}\par
+                        \}\par
+\par
+                \}\par
+\par
+                void deleteNode(int data)\par
+                \{\par
+                        Node *node=find(root,data);\par
+                        if(node!=NULL)\par
+                        \{\par
+                                if((node->getRight()==NULL) && (node->getLeft()==NULL))\par
+                                \{\par
+                                        deleteZeroChild(node);\par
+                                \}\par
+                                else if((node->getRight()==NULL && node->getLeft()!=NULL) ||\par
+                                        (node->getRight()!=NULL && node->getLeft()==NULL))\par
+                                \{\par
+                                        deleteOneChild(node);\par
+                                \}\par
+                                else\par
+                                \{\par
+                                        //deleteTwoChild(root,node);\par
+                                \}\par
+                        \}\par
+                \}\par
+\par
+\};\par
+\par
+int main()\par
+\{\par
+        BST bs;\par
+        char ch;\par
+        while(1)\par
+        \{\par
+                cin>>ch;\par
+                if(ch=='i')\par
+                \{\par
+                        int data;\par
+                        cin>>data;\par
+                        bs.insert(data);\par
+                \}\par
+                if(ch=='d')\par
+                \{\par
+                        int data;\par
+                        cin>>data;\par
+                        bs.deleteNode(data);\par
+                \}\par
+                if(ch=='1')\par
+                \{\par
+                        bs.inorder();\par
+                \}\par
+                if(ch=='2')\par
+                \{\par
+                        bs.preorder();\par
+                \}\par
+                if(ch=='3')\par
+                \{\par
+                        bs.postorder();\par
+                \}\par
+                if(ch=='4')\par
+                \{\par
+                        bs.DFS();\par
+                \}\par
+                if(ch=='5')\par
+                \{\par
+                        bs.BFS();\par
+                \}\par
+                if(ch=='e')\par
+                \{\par
+                        break;\par
+                \}\par
+                if(ch=='a')\par
+                \{\par
+                        bs.Arrayprint();\par
+                \}\par
+                if(ch=='c')\par
+                \{\par
+                        bs.CompareOrder();\par
+                \}\par
+        \}\par
+return 0;\par
+\}\par
+}
+ 

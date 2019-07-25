@@ -1,0 +1,307 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 6.3.9600}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9\par
+\par
+#include<iostream>\par
+using namespace std;\par
+\par
+class Node\par
+\{\par
+        private:\par
+                int data;\par
+                Node *next;\par
+        public:\par
+                Node()\par
+                \{\par
+                \}\par
+                Node(int data)\par
+                \{\par
+                        this->data=data;\par
+                        this->next=NULL;\par
+                \}\par
+                int getData()\par
+                \{\par
+                        return data;\par
+                \}\par
+                Node *getNext()\par
+                \{\par
+                        return next;\par
+                \}\par
+                void setData(int data)\par
+                \{\par
+                \}\par
+                void setNext(Node *next)\par
+                \{\par
+                        this->next=next;\par
+                \}\par
+                void print()\par
+                \{\par
+                        if(data!=0)\par
+                                cout<<data<<"->";\par
+                \}\par
+\};\par
+\par
+class Linklist\par
+\{\par
+        Node *head;\par
+        public:\par
+                Linklist()\par
+                \{\par
+                        head=NULL;\par
+                \}\par
+                 void insertAtEnd(int data)\par
+                 \{\par
+                        Node *newnode=new Node(data);\par
+                        Node *temp=new Node();\par
+                        temp=head;\par
+                        if(head==NULL)\par
+                        \{\par
+                                head=newnode;\par
+                        \}\par
+                        else\par
+                        \{\par
+                                while(temp->getNext()!=NULL)\par
+                                \{\par
+                                         temp=temp->getNext();\par
+                                \}\par
+                                temp->setNext(newnode);\par
+                         \}\par
+                \}\par
+                 \par
+                void insertBefore(int before,int data)\par
+                \{\par
+                        Node *newnode=new Node(data);\par
+                        Node *temp=head;\par
+                        Node *prev=NULL;\par
+                        while(temp!=NULL)\par
+                        \{\par
+                                if(temp->getData()==before)\par
+                                \{\par
+                                        break;\par
+                                \}\par
+                                prev=temp;\par
+                                temp=temp->getNext();\par
+                        \}\par
+                        if(prev==NULL)\par
+                        \{\par
+                                insertAtBeg(data);\par
+                        \}\par
+                        else\par
+                        \{\par
+                                prev->setNext(newnode);\par
+                                newnode->setNext(temp);\par
+                        \}\par
+                \}\par
+                void insertAfter (int after,int data)\par
+                \{\par
+                        //cout<<"inside insertAfter"<<endl;\par
+                        Node *newnode=new Node(data);\par
+                        Node *temp=head;\par
+                        while(temp!=NULL)\par
+                        \{\par
+                                //cout<<"inside while"<<endl;\par
+                                if(temp->getData()==after)\par
+                                \{\par
+                                        break;\par
+                                \}\par
+                                temp=temp->getNext();\par
+                        \}\par
+                                if(temp->getNext()==NULL)\par
+                                \{\par
+                                        insertAtEnd(data);\par
+                                \}\par
+                                else\par
+                                \{\par
+                                        newnode->setNext(temp->getNext());\par
+                                        temp->setNext(newnode);\par
+                                \}\par
+                \}\par
+\par
+\par
+                 void insertAtBeg(int data)\par
+                 \{\par
+                        Node *newnode=new Node(data);\par
+                        Node *temp=head;\par
+                        if(head==NULL)\par
+                        \{\par
+                                head=newnode;\par
+                        \}\par
+                        else\par
+                        \{\par
+                                newnode->setNext(head);\par
+                                head=newnode;\par
+                        \}\par
+                 \}\par
+\par
+                void deleteAtEnd()\par
+                \{\par
+                        if(head==NULL)\{\par
+                                cout<<"list is empty";\par
+                        \}\par
+                        if(head->getNext()==NULL)\{\par
+                                delete head;\par
+                                //return NULL;\par
+                        \}\par
+                                Node *temp=head;\par
+                                Node *prev=head;\par
+                                while(temp->getNext()!=NULL)\{\par
+                                        prev=temp;\par
+                                        temp=temp->getNext();\par
+                                \}\par
+                                prev->setNext(NULL);\par
+                \}\par
+\par
+                void deleteAtBeg()\par
+                \{\par
+                        if(head==NULL)\{\par
+                                cout<<"list is empty";\par
+                        \}\par
+                        if(head->getNext()==NULL)\{\par
+                                delete head;\par
+                        \}\par
+                        Node *temp=head;\par
+                        head=temp->getNext();\par
+                \}\par
+\par
+                void deleteAfter(int after)\par
+                \{\par
+                        //cout<<"inside delete after"<<endl;\par
+                        Node *temp=head;\par
+                        Node *prev=NULL;\par
+\par
+                        if(head==NULL)\par
+                                cout<<"list is empty";\par
+                        if(head->getNext()==NULL)\par
+                                deleteAtEnd();\par
+\par
+                        while(temp!=NULL)\{\par
+                                prev=temp;\par
+                                if(temp->getData()==after)\{\par
+                                        break;\par
+                                \}\par
+                                temp=temp->getNext();\par
+                        \}\par
+                                temp=temp->getNext();\par
+                                prev->setNext(temp->getNext());\par
+                \}\par
+\par
+                void deleteBefore(int before)\par
+                \{\par
+                        if(head==NULL)\par
+                                cout<<"list is empty";\par
+                        if(head->getNext()==NULL)\par
+                                deleteAtBeg();\par
+                        Node *temp=head;\par
+                        Node *prev=NULL;\par
+                        while(temp!=NULL)\par
+                        \{\par
+                                if(temp->getNext()!=NULL)\{\par
+                                if(temp->getNext()->getData()==before)\{\par
+                                        if(temp==head)\par
+                                        \{\par
+                                                prev=temp;\par
+                                                temp=temp->getNext();\par
+                                                head=temp;\par
+                                                delete prev;\par
+                                        \}\par
+                                        else\par
+                                                break;\par
+                                \}\par
+                                \}\par
+                                prev=temp;\par
+                                temp=temp->getNext();\par
+                        \}\par
+                                if(prev!=NULL && temp!=NULL)\par
+                                        prev->setNext(temp->getNext());\par
+\par
+                \}\par
+\par
+                void print()\par
+                \{\par
+                        Node *temp=new Node();\par
+                        temp=head;\par
+                                while(temp!=NULL)\par
+                                \{\par
+                                        temp->print();\par
+                                        temp=temp->getNext();\par
+                                \}\par
+                                cout<<"Null"<<endl;\par
+                \}\par
+\};\par
+void list()\par
+\{\par
+        cout<<"a-insert at end"<<endl;\par
+        cout<<"b-insert at begining"<<endl;\par
+        cout<<"p-print list"<<endl;\par
+        cout<<"c-insert before"<<endl;\par
+        cout<<"d-insert after"<<endl;\par
+        cout<<"e-delete at end"<<endl;\par
+        cout<<"f-delete at begining"<<endl;\par
+        cout<<"g-delete after";\par
+        cout<<"x-exit"<<endl;\par
+        cout<<"l-list"<<endl;\par
+\}\par
+int main()\par
+\{\par
+        Linklist ll;\par
+        while(1)\par
+        \{\par
+                char ch;\par
+                cin>>ch;\par
+                if(ch=='l')\par
+                        list();\par
+                if(ch=='x')\par
+                        break;\par
+                if(ch=='a')\par
+                \{\par
+                        int i;\par
+                        cin>>i;\par
+                        ll.insertAtEnd(i);\par
+                \}\par
+                if(ch=='b')\par
+                \{\par
+                        int i;\par
+                        cin>>i;\par
+                        ll.insertAtBeg(i);\par
+                \}\par
+                if(ch=='p')\par
+                \{\par
+                        ll.print();\par
+                \}\par
+                if(ch=='c')\par
+                \{\par
+                        int b,d;\par
+                        cin>>b>>d;\par
+                        ll.insertBefore(b,d);\par
+                \}\par
+                if(ch=='d')\par
+                \{\par
+                        int a,d;\par
+                        cin>>a>>d;\par
+                        ll.insertAfter(a,d);\par
+                \}\par
+                if(ch=='e')\par
+                \{\par
+                        ll.deleteAtEnd();\par
+                \}\par
+                if(ch=='f')\par
+                \{\par
+                        ll.deleteAtBeg();\par
+                \}\par
+                if(ch=='g')\par
+                \{\par
+                        int a;\par
+                        cin>>a;\par
+                        ll.deleteAfter(a);\par
+                \}\par
+                if(ch=='h')\par
+                \{\par
+                        int b;\par
+                        cin>>b;\par
+                        ll.deleteBefore(b);\par
+                \}\par
+        \}\par
+return 0;\par
+\}\par
+}
+ 
